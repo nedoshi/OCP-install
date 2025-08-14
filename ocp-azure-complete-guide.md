@@ -120,10 +120,10 @@ OpenShift requires specific DNS records:
 
 | Record Type | Name | Purpose | Example |
 |-------------|------|---------|---------|
-| A | api.clustername | API server access | api.nd.azure-na.mobb.cloud → 20.1.2.3 |
-| A | api-int.clustername | Internal API access | api-int.nd.azure-na.mobb.cloud → 10.0.1.100 |
-| A | *.apps.clustername | Application ingress | *.apps.nd.azure-na.mobb.cloud → 20.1.2.4 |
-| A | console-openshift-console.apps.clustername | Web console | console-openshift-console.apps.nd.azure-na.mobb.cloud → 20.1.2.4 |
+| A | api.clustername | API server access | api.nd.azure-na.mobb.cloud |
+| A | api-int.clustername | Internal API access | api-int.nd.azure-na.mobb.cloud |
+| A | *.apps.clustername | Application ingress | *.apps.nd.azure-na.mobb.cloud  |
+| A | console-openshift-console.apps.clustername | Web console | console-openshift-console.apps.nd.azure-na.mobb.cloud |
 
 ### Step-by-Step DNS Setup
 
@@ -282,7 +282,7 @@ az network dns record-set a add-record \
   --resource-group $DNS_RESOURCE_GROUP \
   --zone-name $PARENT_DOMAIN \
   --record-set-name api.$CLUSTER_NAME \
-  --ipv4-address 20.1.2.3
+  --ipv4-address $API_IP
 
 # Create wildcard A record for apps
 az network dns record-set a create \
@@ -295,7 +295,7 @@ az network dns record-set a add-record \
   --resource-group $DNS_RESOURCE_GROUP \
   --zone-name $PARENT_DOMAIN \
   --record-set-name "*.apps.$CLUSTER_NAME" \
-  --ipv4-address 20.1.2.4
+  --ipv4-address $INGRESS_IP
 ```
 
 ## Public Cluster Installation
